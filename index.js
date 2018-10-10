@@ -99,44 +99,21 @@ fi = (function () {
       return newArray;
     },
 
-    // flatten: function (array, shallow = false) {
-    //   let newArray = [];
-    //   for (let i = 0; i < array.length; i++) {
-    //     if (Array.isArray(array[i])) {
-    //       console.log(`I'm nesting!`);
-    //       let x = this.flatten(array[i]);
-    //       newArray.push(x);
-    //     } else {
-    //       newArray.push(array[i]);
-    //     }
-    //   }
-    //   console.log(newArray);
-    //   return newArray;
-    // },
-
-    // uniq: function (array, isSorted = false, callback = false) {
-    //   let hashTable = {};
-    //   let results = [];
-    //   if (callback) {
-    //     for (let i = 0; i < array.length; i++) {
-    //       let elementHashKey = callback(array[i]);
-    //       if (!hashTable[elementHashKey]) {
-    //         hashTable[elementHashKey] = `I'm unique!`;
-    //         results.push(array[i]);
-    //       }
-    //     }
-    //   } else {
-    //     for (let i = 0; i < array.length; i++) {
-    //       if (!hashTable[array[i]]) {
-    //         hashTable[array[i]] = `I'm unique!`;
-    //         results.push(array[i]);
-    //       }
-    //     }
-    //   }
-    //   console.log(hashTable);
-    //   console.log(results);
-    //   return results;
-    // },
+    flatten: function (array, shallow = false) {
+      let newArray = [];
+      let findNew = function (array) {
+        for (let element in array) {
+          if (Array.isArray(array[element]) && !shallow) {
+            findNew(array[element]);
+          } else {
+            newArray = newArray.concat(array[element]);
+          }
+        }
+        return newArray;
+      };
+      findNew(array);
+      return newArray;
+    },
 
     uniq: function (array, isSorted = false, callback = false) {
       let results = [];
@@ -187,6 +164,10 @@ fi = (function () {
       return results.sort();
     },
 
+    // :)
+    giveMeMore: function () {
+      return true;
+    }
   };
 })();
 
